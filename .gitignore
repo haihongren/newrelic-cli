@@ -5,3 +5,12 @@
 /my-debug
 *.log
 /.vscode
+backup_*
+temp*
+mustit*
+mybackup*
+new_monitors
+original
+monitor_*
+nr-darwin*
+

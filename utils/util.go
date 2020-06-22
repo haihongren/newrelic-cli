@@ -241,6 +241,22 @@ func MergeAlertSyntheticsConditionsList(s1 []*newrelic.AlertsSyntheticsCondition
 	return slice
 }
 
+func MergeAlertsInfrastructureConditionsList(s1 []*newrelic.AlertsInfrastructureCondition, s2 []*newrelic.AlertsInfrastructureCondition) (slice []*newrelic.AlertsInfrastructureCondition) {
+	var len1 = len(s1)
+	var len2 = len(s2)
+	var len3 = len1 + len2
+	slice = make([]*newrelic.AlertsInfrastructureCondition, len3)
+
+	for i := 0; i < len1; i++ {
+		slice[i] = s1[i]
+	}
+	for j := 0; j < len2; j++ {
+		slice[j+len1] = s2[j]
+	}
+
+	return slice
+}
+
 func MergeAlertConditionList(s1 *newrelic.AlertsConditionList, s2 *newrelic.AlertsConditionList) *newrelic.AlertsConditionList {
 	var newList *newrelic.AlertsConditionList = &newrelic.AlertsConditionList{}
 	newList.AlertsDefaultConditionList = &newrelic.AlertsDefaultConditionList{}
@@ -248,6 +264,7 @@ func MergeAlertConditionList(s1 *newrelic.AlertsConditionList, s2 *newrelic.Aler
 	newList.AlertsNRQLConditionList = &newrelic.AlertsNRQLConditionList{}
 	newList.AlertsPluginsConditionList = &newrelic.AlertsPluginsConditionList{}
 	newList.AlertsSyntheticsConditionList = &newrelic.AlertsSyntheticsConditionList{}
+	newList.AlertsInfrastructureConditionList = &newrelic.AlertsInfrastructureConditionList{}
 
 	//default
 	if s1.AlertsDefaultConditionList != nil && s2.AlertsDefaultConditionList != nil {
@@ -270,6 +287,11 @@ func MergeAlertConditionList(s1 *newrelic.AlertsConditionList, s2 *newrelic.Aler
 	if s1.AlertsSyntheticsConditionList != nil && s2.AlertsSyntheticsConditionList != nil {
 		newList.AlertsSyntheticsConditions = MergeAlertSyntheticsConditionsList(s1.AlertsSyntheticsConditionList.AlertsSyntheticsConditions, s2.AlertsSyntheticsConditionList.AlertsSyntheticsConditions)
 	}
+	//infra hren
+	if s1.AlertsInfrastructureConditionList != nil && s2.AlertsInfrastructureConditionList != nil {
+		newList.AlertsInfrastructureConditions = MergeAlertsInfrastructureConditionsList(s1.AlertsInfrastructureConditionList.AlertsInfrastructureConditions, s2.AlertsInfrastructureConditionList.AlertsInfrastructureConditions)
+	}
+
 	return newList
 }
 

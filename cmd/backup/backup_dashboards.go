@@ -26,6 +26,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/pretty"
+	"github.com/tidwall/sjson"
 )
 
 var dashboardsCmd = &cobra.Command{
@@ -99,6 +100,7 @@ var dashboardsCmd = &cobra.Command{
 
 			id := gjson.Parse(dashboard.String()).Get("id")
 			title := gjson.Parse(dashboard.String()).Get("title")
+
 			name := title.String()
 			var fileName = backupFolder + "/" + name + "-" + id.String() + ".dashboard.bak"
 
@@ -115,9 +117,15 @@ var dashboardsCmd = &cobra.Command{
 					continue
 				}
 				jsonDashboard := pretty.Pretty([]byte(strDashboard))
-				// fmt.Printf("%s\n", string(jsonDashboard))
+				oldDashboardcontent := string(jsonDashboard)
+				newDashboardcontent, _ := sjson.Set(oldDashboardcontent, "dashboard.grid_column_count", 12)
 
-				err = ioutil.WriteFile(fileName, jsonDashboard, 0666)
+				newJSONDashboard := pretty.Pretty([]byte(newDashboardcontent))
+
+				// fmt.Printf("here:old == %s\n", string(jsonDashboard))
+				// fmt.Printf("here:new == %s\n", string(newJSONDashboard))
+
+				err = ioutil.WriteFile(fileName, newJSONDashboard, 0666)
 				if err != nil {
 					fmt.Println(err)
 				} else {

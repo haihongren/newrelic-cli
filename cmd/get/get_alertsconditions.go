@@ -147,6 +147,7 @@ func GetAllConditionsByAlertPolicyID(id int64) (*newrelic.AlertsConditionList, e
 	allList.AlertsNRQLConditionList = &newrelic.AlertsNRQLConditionList{}
 	allList.AlertsPluginsConditionList = &newrelic.AlertsPluginsConditionList{}
 	allList.AlertsSyntheticsConditionList = &newrelic.AlertsSyntheticsConditionList{}
+	allList.AlertsInfrastructureConditionList = &newrelic.AlertsInfrastructureConditionList{}
 
 	var conditionsOptions *newrelic.AlertsConditionsOptions
 	conditionsOptions = new(newrelic.AlertsConditionsOptions)
@@ -169,8 +170,9 @@ func GetAllConditionsByAlertPolicyID(id int64) (*newrelic.AlertsConditionList, e
 		var nrqlConditionsLen = len(list.AlertsNRQLConditions)
 		var pluginsConditionsLen = len(list.AlertsPluginsConditions)
 		var syntheticsConditionsLen = len(list.AlertsSyntheticsConditions)
+		var infrastructureConditionsLen = len(list.AlertsInfrastructureConditions)
 
-		if defaultConditionsLen == 0 && externalServiceConditionsLen == 0 && nrqlConditionsLen == 0 && pluginsConditionsLen == 0 && syntheticsConditionsLen == 0 {
+		if defaultConditionsLen == 0 && externalServiceConditionsLen == 0 && nrqlConditionsLen == 0 && pluginsConditionsLen == 0 && syntheticsConditionsLen == 0 && infrastructureConditionsLen == 0 {
 			break
 		} else {
 			//merge conditions list

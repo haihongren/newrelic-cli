@@ -89,7 +89,9 @@ func (r *Response) String() string {
 }
 
 type PageOptions struct {
-	Page int `url:"page,omitempty"`
+	Page   int `url:"page,omitempty"`
+	Limit  int `url:"limit,omitempty"`
+	Offset int `url:"offset,omitempty"`
 }
 
 func NewClient(httpClient *http.Client, endpointType string) *Client {

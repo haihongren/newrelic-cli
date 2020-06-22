@@ -20,11 +20,13 @@ import (
 	"fmt"
 )
 
+// Dashboard struct
 type Dashboard struct {
-	ID          *int64  `json:"id,omitempty"`
-	Title       *string `json:"title,omitempty"`
-	Description *string `json:"description,omitempty"`
-	Icon        *string `json:"icon,omitempty"`
+	ID              *int64  `json:"id,omitempty"`
+	Title           *string `json:"title,omitempty"`
+	Description     *string `json:"description,omitempty"`
+	Icon            *string `json:"icon,omitempty"`
+	GridColumnCount *int64  `json:"grid_column_count,omitempty"`
 	//created_at
 	//updated_at
 	Visibility *string `json:"visibility,omitempty"`
@@ -34,20 +36,25 @@ type Dashboard struct {
 	OwnerEmail *string `json:"owner_email,omitempty"`
 }
 
+// DashboardList struct
 type DashboardList struct {
 	Dashboards []*Dashboard `json:"dashboards,omitempty"`
 }
 
+// DashboardListOptions struct
 type DashboardListOptions struct {
 	PageOptions
 }
 
+// DashboardService struct
 type DashboardService service
 
+// CreateDashboardResponse struct
 type CreateDashboardResponse struct {
 	Dashboard *Dashboard `json:"dashboard,omitempty"`
 }
 
+// ListAll struct
 func (s *DashboardService) ListAll(ctx context.Context, opt *DashboardListOptions) (*Response, []byte, error) {
 	u, err := addOptions("dashboards.json", opt)
 
@@ -66,6 +73,7 @@ func (s *DashboardService) ListAll(ctx context.Context, opt *DashboardListOption
 	return resp, bytes, nil
 }
 
+// GetByID func
 func (s *DashboardService) GetByID(ctx context.Context, id int64) (*Response, []byte, error) {
 	u := fmt.Sprintf("dashboards/%v.json", id)
 	req, err := s.client.NewRequest("GET", u, nil)
@@ -81,6 +89,7 @@ func (s *DashboardService) GetByID(ctx context.Context, id int64) (*Response, []
 	return resp, bytes, nil
 }
 
+// DeleteByID func
 func (s *DashboardService) DeleteByID(ctx context.Context, id int64) (*Response, []byte, error) {
 	u := fmt.Sprintf("dashboards/%v.json", id)
 	req, err := s.client.NewRequest("DELETE", u, nil)
@@ -96,6 +105,7 @@ func (s *DashboardService) DeleteByID(ctx context.Context, id int64) (*Response,
 	return resp, bytes, nil
 }
 
+// Create func
 func (s *DashboardService) Create(ctx context.Context, dashboard string) (*Response, []byte, error) {
 	u := "dashboards.json"
 	req, err := s.client.NewRequestForNonJSON("POST", u, dashboard)
@@ -111,6 +121,7 @@ func (s *DashboardService) Create(ctx context.Context, dashboard string) (*Respo
 	return resp, bytes, nil
 }
 
+// Update func
 func (s *DashboardService) Update(ctx context.Context, dashboard string, id int64) (*Response, []byte, error) {
 	u := fmt.Sprintf("dashboards/%v.json", id)
 	req, err := s.client.NewRequestForNonJSON("PUT", u, dashboard)

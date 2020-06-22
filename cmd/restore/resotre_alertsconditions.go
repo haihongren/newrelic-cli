@@ -312,6 +312,26 @@ var alertsconditionsCmd = &cobra.Command{
 					}
 				}
 			}
+			// infra restore hren
+			if alertPolicySet.AlertsConditionList != nil {
+				if alertPolicySet.AlertsConditionList.AlertsInfrastructureConditionList != nil {
+					var isErr bool = false
+					for _, infraCondition := range alertPolicySet.AlertsConditionList.AlertsInfrastructureConditionList.AlertsInfrastructureConditions {
+						var cat newrelic.ConditionCategory = newrelic.ConditionInfrastructure
+						var ac = new(newrelic.AlertsConditionEntity)
+						ac.AlertsInfrastructureConditionEntity = &newrelic.AlertsInfrastructureConditionEntity{}
+						ac.AlertsInfrastructureConditionEntity.AlertsInfrastructureCondition = infraCondition
+						err, ret := RestoreOneCondition(*newAlertPolicy.ID, cat, ac, updateMode, isPolicyCreated)
+						if err != nil || ret.IsContinue == false {
+							isErr = true
+							break
+						}
+					}
+					if isErr == true {
+						goto next
+					}
+				}
+			}
 
 			if alertPolicySet.AlertsConditionList != nil {
 				if alertPolicySet.AlertsConditionList.AlertsPluginsConditionList != nil {

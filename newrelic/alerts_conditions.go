@@ -27,7 +27,8 @@ const (
 	ConditionExternalService ConditionCategory = "external_service_condition"
 	ConditionSynthetics      ConditionCategory = "synthetics_condition"
 	ConditionNRQL            ConditionCategory = "nrql_condition"
-	ConditionInfrastructure  ConditionCategory = "infrastructure_condition"
+	// ConditionInfrastructure  ConditionCategory = "infrastructure_condition"
+	ConditionInfrastructure ConditionCategory = "data"
 )
 
 type ConditionCategory string
