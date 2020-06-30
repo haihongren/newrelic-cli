@@ -34,7 +34,7 @@ endif
 	git push --tags
 
 $(PLATFORMS):
-	GOOS=$(os) GOARCH=$(arch) $(BUILDENVVAR) go build -o dist/nr-$(os)-$(arch) *.go
+	GOOS=$(os) GOARCH=$(arch) $(BUILDENVVAR) go build -o dist/nr-$(os)-$(VERSION)	 *.go
 
 release: $(PLATFORMS)
 

@@ -341,10 +341,11 @@ var alertsconditionsCmd = &cobra.Command{
 						var ac = new(newrelic.AlertsConditionEntity)
 						ac.AlertsPluginsConditionEntity = &newrelic.AlertsPluginsConditionEntity{}
 						ac.AlertsPluginsConditionEntity.AlertsPluginsCondition = pluginsCondition
-						err, ret := RestoreOneCondition(*newAlertPolicy.ID, cat, ac, updateMode, isPolicyCreated)
+						_, ret := RestoreOneCondition(*newAlertPolicy.ID, cat, ac, updateMode, isPolicyCreated)
+						ret.IsContinue = true
 						if err != nil || ret.IsContinue == false {
 							isErr = true
-							break
+							// break
 						}
 					}
 					if isErr == true {
@@ -519,6 +520,9 @@ func RestoreOneCondition(alertPolicyID int64, cat newrelic.ConditionCategory, c 
 			conditionName = *c.AlertsPluginsCondition.Name
 		case newrelic.ConditionSynthetics:
 			conditionName = *c.AlertsSyntheticsCondition.Name
+		case newrelic.ConditionInfrastructure:
+			conditionName = *c.AlertsInfrastructureCondition.Name
+
 		}
 		isConditionExists, conditionId, err, ret := get.IsConditionNameExists(alertPolicyID, conditionName, cat)
 		if err != nil {

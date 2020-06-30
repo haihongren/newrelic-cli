@@ -23,8 +23,10 @@ type AlertsInfrastructureCondition struct {
 	AlertsInfraThreshold
 	Comparison           *string      `json:"comparison,omitempty"`
 	CreatedAtEpochMillis *int64       `json:"created_at_epoch_millis,omitempty"`
+	ViolationCloseTimer  *int64       `json:"violation_close_timer,omitempty"`
 	Enabled              *bool        `json:"enabled,omitempty"`
 	EventType            *string      `json:"event_type,omitempty"`
+	Description          *string      `json:"description,omitempty"`
 	Filter               *filterField `json:"filter,omitempty"`
 	ID                   *int64       `json:"id,omitempty"`
 	IntegrationProvider  *string      `json:"integration_provider,omitempty"`

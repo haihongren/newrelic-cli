@@ -237,6 +237,8 @@ func GetConditionsByAlertPolicyIDAndConditionType(id int64, cat newrelic.Conditi
 			size = len(list.AlertsPluginsConditions)
 		} else if cat == newrelic.ConditionSynthetics {
 			size = len(list.AlertsSyntheticsConditions)
+		} else if cat == newrelic.ConditionInfrastructure {
+			size = len(list.AlertsInfrastructureConditions)
 		}
 
 		if size == 0 {
